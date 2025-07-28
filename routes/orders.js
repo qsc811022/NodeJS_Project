@@ -23,10 +23,20 @@ router.post('/', async (req, res) => {
   await poolConnect;
   const { name, menuId, note } = req.body;
   try {
+    // check if user exists
     let result = await pool.request()
       .input('name', sql.NVarChar(50), name)
-      .query('MERGE Users WITH (HOLDLOCK) AS target USING (SELECT @name AS Name) AS src ON target.Name = src.Name WHEN NOT MATCHED THEN INSERT (Name) VALUES (src.Name) OUTPUT inserted.Id;');
-    const userId = result.recordset.length ? result.recordset[0].Id : null;
+      .query('SELECT Id FROM Users WHERE Name = @name');
+
+    let userId;
+    if (result.recordset.length) {
+      userId = result.recordset[0].Id;
+    } else {
+      result = await pool.request()
+        .input('name', sql.NVarChar(50), name)
+        .query('INSERT INTO Users (Name) OUTPUT INSERTED.Id VALUES (@name)');
+      userId = result.recordset[0].Id;
+    }
 
     await pool.request()
       .input('userId', sql.Int, userId)

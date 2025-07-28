@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LunchBox Ordering System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>LunchBox Ordering System</h1>
+    <form id="orderForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="menu">Menu Item:</label>
+        <select id="menu"></select>
+
+        <label for="note">Note:</label>
+        <input type="text" id="note">
+
+        <button type="submit">Submit Order</button>
+    </form>
+
+    <h2>Orders</h2>
+    <table id="ordersTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Menu</th>
+                <th>Price</th>
+                <th>Note</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+</html>

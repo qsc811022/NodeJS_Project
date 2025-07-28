@@ -1,0 +1,23 @@
+CREATE TABLE Users (
+  Id INT PRIMARY KEY IDENTITY,
+  Username NVARCHAR(50) UNIQUE,
+  Password NVARCHAR(255),
+  IsAdmin BIT DEFAULT 0
+);
+
+CREATE TABLE Menus (
+  Id INT PRIMARY KEY IDENTITY,
+  Name NVARCHAR(100),
+  Price INT,
+  AvailableDate DATE
+);
+
+CREATE TABLE Orders (
+  Id INT PRIMARY KEY IDENTITY,
+  UserId INT,
+  MenuId INT,
+  OrderDate DATE,
+  Note NVARCHAR(255),
+  FOREIGN KEY (UserId) REFERENCES Users(Id),
+  FOREIGN KEY (MenuId) REFERENCES Menus(Id)
+);
